@@ -15128,6 +15128,9 @@
     (setq initial-buffer-choice "/home/felix/Development/mapedit/")
     (find-file "/home/felix/Development/mapedit/src/*")
 
+    ; Display line numbers
+    (global-linum-mode t)
+
     ; Maximize window
     (toggle-frame-maximized)
 
@@ -15365,83 +15368,92 @@
         (call-interactively 'find-file-other-window)
     )
 
+    (setq ido-default-buffer-method 'selected-window)
+
 ; ---------------------------------- SHORTCUT SETTINGS -------------------------------------- ;
 
     ; CTRL + O            Open file in current active buffer
     (global-set-key (kbd "C-O") 'find-file)
+    ; CTRL + A            Select all
+    (global-set-key (kbd "C-A") 'mark-whole-buffer)
     ; CTRL + SHIFT + O    Open file in other buffer
     (global-set-key (kbd "C-S-O") 'find-file-other-window)
-    ; CTRL + U            Select buffer
+    ; CTRL + U            Load buffer in current window
     (global-set-key (kbd "C-U") 'ido-switch-buffer)
-    ; CTRL + SHIFT + U    Switch between windows
-    (global-set-key (kbd "C-S-U") 'ido-switch-buffer-other-window)
+    ; CTRL + T            Load buffer in other window
+    (global-set-key (kbd "C-T") 'ido-switch-buffer-other-window)
+    ; CTRL + D            Switch to other window (override delete in front)
+    (global-set-key (kbd "C-D") 'other-window)
     ; CTRL + M            Newline and indent
     (global-set-key (kbd "C-M") 'newline-and-indent)
     ; CTRL + S             Save buffer
     (global-set-key (kbd "C-S") 'untabify-and-save-buffer)
     ; TAB                 Autocomplete
-    ;(define-key global-map "\t" 'dabbrev-expand)
+    (global-set-key (kbd "TAB") 'dabbrev-expand)
     ; CTRL + J            Search + replace
     (global-set-key (kbd "C-J") 'imenu)
     ; CTRL + SPACE        Set mark
     (global-set-key (read-kbd-macro "\C- ") 'set-mark-command)
     ; CTRL + Q            Copy block
     (global-set-key (kbd "C-Q") 'append-as-kill)
+    ; CTRL + S            Save buffer
+    (global-set-key (kbd "C-S") 'save-buffer)
+    ; CTRL + SHIFT + P    Previous blank line
+    (global-set-key (kbd "C-S-P") 'previous-blank-line)
+    ; CTRL + SHIFT + N    Next blank line
+    (global-set-key (kbd "C-S-N") 'next-blank-line)
+    ; CTRL + TAB          Indent region
+    (define-key global-map [C-tab] 'indent-region)
+
     ; ALT + Z             Kill region
     (global-set-key (kbd "M-Z") 'kill-region)
     ; ALT + BACKSPACE     Kill last word
     (define-key global-map "\377" 'backward-kill-word)
     ; ALT + DELETE        Kill next word
     (define-key global-map [M-delete] 'kill-word)
-    ; ALT + R              Revert buffer
-    (define-key global-map "\er" 'revert-buffer)
-    ; CTRL + K              Kill buffer
-    (define-key global-map "\ek" 'kill-this-buffer)
-    ; CTRL + S              Save buffer
-    (global-set-key (kbd "C-S") 'save-buffer)
-    ; CTRL + P              Maximize current buffer
-    (define-key global-map "\ep" 'maximize-frame)
-    ; CTRL + P              Maximize other buffer
-    (define-key global-map "\ew" 'other-window)
-    ; ALT + :              Jump view back to last mark
-    (define-key global-map "\e:" 'View-back-to-mark)
-    ; CTRL + P              Exchange point and mark
-    (define-key global-map "\e;" 'exchange-point-and-mark)
+    ; ALT + R             Revert buffer
+    (global-set-key (kbd "M-R") 'revert-buffer)
+    ; ALT + K             Kill buffer
+    (global-set-key (kbd "M-K") 'kill-this-buffer)
+    ; ALT + P             Maximize current buffer
+    (global-set-key (kbd "M-P") 'maximize-frame)
+    ; CTRL + W            Maximize other buffer
+    (global-set-key (kbd "M-W") 'other-window)
+    ; ALT + :             Jump view back to last mark
+    (global-set-key (kbd "M-:") 'View-back-to-mark)
+    ; CTRL + P            Exchange point and mark
+    (global-set-key (kbd "M-;") 'exchange-point-and-mark)
     ; CTRL + G            Go to line
     (global-set-key (kbd "C-G") 'goto-line)
     ; CTRL + Z            Undo
     (global-set-key (kbd "C-Z") 'undo)
-    ; CTRL + 6           Uppercase words first letter
-    (define-key global-map "\e6" 'upcase-word)
-    ; CTRL + ^           Capitalize word
-    (define-key global-map "\e^" 'captilize-word)
-    ; CTRL + .           Fill paragraph (?)
-    (define-key global-map "\e." 'fill-paragraph)
-    ; CTRL + .           Replace in region (from last seen mark)
-    (define-key global-map "\el" 'felix-replace-in-region)
-    ; CTRL + o           Interactive replace
+    ; ALT + 6             Uppercase words first letter
+    (global-set-key (kbd "M-6") 'upcase-word)
+    ; ALT + ^             Capitalize word
+    (global-set-key (kbd "M-^") 'captilize-word)
+    ; ALT + .             Fill paragraph
+    (global-set-key (kbd "M-.") 'fill-paragraph)
+    ; ALT + .             Replace in region (from last seen mark)
+    (global-set-key (kbd "M-L") 'felix-replace-in-region)
+    ; CTRL + o            Interactive replace
     ;(define-key global-map "\eo" 'query-replace)
-    ; CTRL + SHIFT + o   Interactive replace
+    ; CTRL + SHIFT + o    Interactive replace
     ;(define-key global-map "\eO" 'felix-replace-string)
-    ; CTRL + [           Start keyboard macro
-    (define-key global-map "\e[" 'start-kbd-macro)
-    ; CTRL + ]           End keyboard macro
-    (define-key global-map "\e]" 'end-kbd-macro)
-    ; CTRL + ]           Call last keyboard macro
-    (define-key global-map "\e'" 'call-last-kbd-macro)
-    ; CTRL + SHIFT + P   Previous blank line
-    (global-set-key (kbd "C-S-P") 'previous-blank-line)
-    ; CTRL + SHIFT + N   Next blank line
-    (global-set-key (kbd "C-S-N") 'next-blank-line)
-    ; CTRL + TAB
-    (define-key global-map [C-tab] 'indent-region)
-    ; SHIFT + TAB                 Autocomplete
+    ; ALT + [             Start keyboard macro
+    (global-set-key (kbd "M-[") 'start-kbd-macro)
+    ; ALT + ]             End keyboard macro
+    (global-set-key (kbd "M-]") 'end-kbd-macro)
+    ; ALT + #             Call last keyboard macro
+    (global-set-key (kbd "M-#") 'call-last-kbd-macro)
+
+    ; SHIFT + TAB         Actually tab
     (define-key global-map [S-tab] 'indent-for-tab-command)
     ; HOME, END, PGUP, PGDOWN
     (define-key global-map [home] 'beginning-of-line)
     (define-key global-map [end] 'end-of-line)
     (define-key global-map [pgup] 'forward-page)
     (define-key global-map [pgdown] 'backward-page)
+
     ; F8                  Replace
     (define-key global-map [f8] 'felix-replace-string)
     ; F9                  Go to first error
@@ -15450,49 +15462,60 @@
     (define-key global-map [f10] 'previous-error)
     ; F11                  Go to next error
     (define-key global-map [f11] 'next-error)
-    ; CTRL + M            Recompile
-    ;(global-set-key (kbd "C-c m") 'recompile)
-    ;(define-key global-map "\em" 'cargo-run-without-asking)
 
     ; --- Rust-specific keyboard shortcuts
-    ; CTRL +
-    ; (define-key global-map (kbd "C-c C-f") 'rust-format-buffer)
-
-    ; Cargo commands
-    ;(define-key cargo-minor-mode-map (kbd "C-c C-e") 'cargo-process-bench)
+    ; CTRL + C, CTRL + SHIFT + F           Format current buffer
+    (define-key global-map (kbd "C-c C-S-f") 'rust-format-buffer)
+    ; CTRL + C, CTRL + E                   cargo bench
     (define-key global-map (kbd "C-c C-e") 'cargo-process-bench)
+    ; CTRL + C, CTRL + B                   cargo build
     (define-key global-map (kbd "C-c C-b") 'cargo-process-build)
+    ; CTRL + C, CTRL + L                   cargo clean
     (define-key global-map (kbd "C-c C-l") 'cargo-process-clean)
+    ; CTRL + C, CTRL + D                   cargo doc
     (define-key global-map (kbd "C-c C-d") 'cargo-process-doc)
+    ; CTRL + C, CTRL + V                   cargo doc --open
     (define-key global-map (kbd "C-c C-v") 'cargo-process-doc-open)
+    ; CTRL + C, CTRL + N                   cargo new
     (define-key global-map (kbd "C-c C-n") 'cargo-process-new)
+    ; CTRL + C, CTRL + I                   cargo init
     (define-key global-map (kbd "C-c C-i") 'cargo-process-init)
+    ; CTRL + C, CTRL + R                   cargo run (also CTRL + ALT + B)
     (define-key global-map (kbd "C-c C-r") 'cargo-process-run)
+    ; CTRL + C, CTRL + X                   cargo run --example
     (define-key global-map (kbd "C-c C-x") 'cargo-process-run-example)
+    ; CTRL + C, CTRL + S                   cargo search
     (define-key global-map (kbd "C-c C-s") 'cargo-process-search)
+    ; CTRL + C, CTRL + T                   cargo test
     (define-key global-map (kbd "C-c C-t") 'cargo-process-test)
+    ; CTRL + C, CTRL + U                   cargo update
     (define-key global-map (kbd "C-c C-u") 'cargo-process-update)
+    ; CTRL + C, CTRL + C                   cargo repeat
     (define-key global-map (kbd "C-c C-c") 'cargo-process-repeat)
+    ; CTRL + C, CTRL + F                   cargo test --current
     (define-key global-map (kbd "C-c C-f") 'cargo-process-current-test)
+    ; CTRL + C, CTRL + O                   cargo test --current-file
     (define-key global-map (kbd "C-c C-o") 'cargo-process-current-file-tests)
+    ; CTRL + C, CTRL + M                   cargo fmt
     (define-key global-map (kbd "C-c C-m") 'cargo-process-fmt)
+    ; CTRL + C, CTRL + M                   cargo check (also CTRL + SHIFT + B)
     (define-key global-map (kbd "C-c C-k") 'cargo-process-check)
+    ; CTRL + C, CTRL + SHIFT + K           cargo clippy
     (define-key global-map (kbd "C-c C-S-k") 'cargo-process-clippy)
 
-    ; CTRL + SHIFT + B   Cargo run (most common command)
-    (global-set-key (kbd "C-S-B") 'cargo-process-build)
+    ; CTRL + SHIFT + B   Cargo check (most common command)
+    (global-set-key (kbd "C-S-B") 'cargo-process-check)
+    ; CTRL + ALT + B   Cargo run (most common command)
+    (global-set-key (kbd "C-M-B") 'cargo-process-run)
 
-    ; DEBUGGING
+    ; Debugging commands
+    (define-key global-map (kbd "C-c C-S-k") 'cargo-process-clippy)
     ;(global-set-key [f5] 'gud-cont)
     ;(global-set-key [f7] 'gud-tbreak)
     ;(global-set-key [S-f11] 'gud-finish)
     ;(global-set-key [f9] 'gud-break)
     ;(global-set-key [f10] 'gud-next)
     ;(global-set-key [f11] 'gud-step)
-
-    ;(define-key global-map [backtab] 'indent-for-tab-command)
-    ;(define-key global-map "\C-y" 'indent-for-tab-command)
-    ;(define-key global-map "   " 'indent-region)
 
 ; ----------------------------------- VISUAL SETTINGS -------------------------------------- ;
 
@@ -15504,10 +15527,11 @@
     (setq-default cursor-type 'bar)
     (set-cursor-color "#ffffff")
 
-    ; Foreground color white
-    (set-foreground-color "#ecf0f1")
-    ; Background color midnight blue
+    ; global foreground color white
+    (set-foreground-color "#ffffff")
+    ; global background color dark grey
     (set-background-color "#1a1a1a")
+
     ; Turn off the menu bar
     (menu-bar-mode -1)
     ; Turn off the toolbar
@@ -15528,19 +15552,34 @@
      (modify-face 'font-lock-fixme-face "Red" nil nil t nil t nil nil)
      (modify-face 'font-lock-note-face "Dark Red" nil nil t nil t nil nil)
 
-    ; Other colors
+    ; Syntax highlighting colors
     (add-to-list 'default-frame-alist '(font . "Monospace-13.5"))
     (set-face-attribute 'default t :font "Monospace-13.5")
 
-    (set-face-attribute 'font-lock-builtin-face nil :foreground "#DAB98F")
-    (set-face-attribute 'font-lock-comment-face nil :foreground "#535351")        ; --- changed, grey
-    (set-face-attribute 'font-lock-constant-face nil :foreground "olive drab")
+    (set-face-attribute 'font-lock-builtin-face nil :foreground "#e74c3c")        ; --- changed, tomato
+    (set-face-attribute 'font-lock-comment-face nil :foreground "#gray50")        ; --- changed, grey
+    (set-face-attribute 'font-lock-constant-face nil :foreground "#535bd4")       ; --- changed, violet
     (set-face-attribute 'font-lock-doc-face nil :foreground "gray50")
     (set-face-attribute 'font-lock-function-name-face nil :foreground "#3498db")  ; --- changed, blue
-    (set-face-attribute 'font-lock-keyword-face nil :foreground "DarkGoldenrod3")
+    (set-face-attribute 'font-lock-keyword-face nil :foreground "#0ce067")        ; --- changed, green
     (set-face-attribute 'font-lock-string-face nil :foreground "#fef51c")         ; --- changed, yellow
-    (set-face-attribute 'font-lock-type-face nil :foreground "burlywood3")
-    (set-face-attribute 'font-lock-variable-name-face nil :foreground "burlywood3")
+    (set-face-attribute 'font-lock-type-face nil :foreground "#3498db")           ; --- changed, blue
+    (set-face-attribute 'font-lock-variable-name-face nil :foreground "#ffffff")  ; --- changed, white
+
+    (set-face-attribute 'cargo-process--error-face nil :foreground "#e74c3c")     ; --- changed, red
+
+    ; cargo
+    ;("^error\\:?" . ')
+    ;("^warning\\:?" . 'cargo-process--warning-face)
+    ;("^\s*\\^\\~*\s*$" . 'cargo-process--pointer-face)
+    ;("^\s*Compiling.*" . 'cargo-process--standard-face)
+    ;("^\s*Running.*" . 'cargo-process--standard-face)
+    ;("^\s*Updating.*" . 'cargo-process--standard-face)
+    ;("test result: FAILED." . 'cargo-process--error-face)
+    ;("test result: ok." . 'cargo-process--ok-face)
+    ;("test\s.*\sFAILED" . 'cargo-process--error-face)
+    ;("test\s.*\sok" . 'cargo-process--ok-face))
+    ;(set-face-attribute 'cargo-process-font-lock-keywords nil :foreground "#efefef")  ; --- changed, white
 
 ; --------------------------------- FORMATTING SETTINGS ------------------------------------ ;
 
