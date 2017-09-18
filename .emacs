@@ -15417,11 +15417,11 @@
     (global-set-key (kbd "M-K") 'kill-this-buffer)
     ; ALT + P             Maximize current buffer
     (global-set-key (kbd "M-P") 'maximize-frame)
-    ; CTRL + W            Maximize other buffer
+    ; ALT + W             Maximize other buffer
     (global-set-key (kbd "M-W") 'other-window)
     ; ALT + :             Jump view back to last mark
     (global-set-key (kbd "M-:") 'View-back-to-mark)
-    ; CTRL + P            Exchange point and mark
+    ; ALT + ;             Exchange point and mark
     (global-set-key (kbd "M-;") 'exchange-point-and-mark)
     ; CTRL + G            Go to line
     (global-set-key (kbd "C-G") 'goto-line)
@@ -15448,10 +15448,13 @@
 
     ; SHIFT + TAB         Actually tab
     (define-key global-map [S-tab] 'indent-for-tab-command)
-    ; HOME, END, PGUP, PGDOWN
+    ; HOME                Go to begin of line
     (define-key global-map [home] 'beginning-of-line)
+    ; END                 Go to end of line
     (define-key global-map [end] 'end-of-line)
+    ; PGUP                Forward page
     (define-key global-map [pgup] 'forward-page)
+    ; PGDOWM              Backward page
     (define-key global-map [pgdown] 'backward-page)
 
     ; F8                  Replace
@@ -15503,13 +15506,12 @@
     ; CTRL + C, CTRL + SHIFT + K           cargo clippy
     (define-key global-map (kbd "C-c C-S-k") 'cargo-process-clippy)
 
-    ; CTRL + SHIFT + B   Cargo check (most common command)
+    ; CTRL + SHIFT + B                     cargo check
     (global-set-key (kbd "C-S-B") 'cargo-process-check)
-    ; CTRL + ALT + B   Cargo run (most common command)
+    ; CTRL + ALT + B                       cargo run
     (global-set-key (kbd "C-M-B") 'cargo-process-run)
 
     ; Debugging commands
-    (define-key global-map (kbd "C-c C-S-k") 'cargo-process-clippy)
     ;(global-set-key [f5] 'gud-cont)
     ;(global-set-key [f7] 'gud-tbreak)
     ;(global-set-key [S-f11] 'gud-finish)
@@ -15541,14 +15543,14 @@
 
     ; TODO and NOTE in red & dark red
     (setq fixme-modes '(rust-mode c++-mode c-mode emacs-lisp-mode))
-     (make-face 'font-lock-fixme-face)
-     (make-face 'font-lock-note-face)
-     (mapc (lambda (mode)
-         (font-lock-add-keywords
-          mode
-          '(("\\<\\(TODO\\)" 1 'font-lock-fixme-face t)
-                ("\\<\\(NOTE\\)" 1 'font-lock-note-face t))))
-        fixme-modes)
+    (make-face 'font-lock-fixme-face)
+    (make-face 'font-lock-note-face)
+    (mapc (lambda (mode)
+        (font-lock-add-keywords
+         mode
+         '(("\\<\\(TODO\\)" 1 'font-lock-fixme-face t)
+               ("\\<\\(NOTE\\)" 1 'font-lock-note-face t))))
+       fixme-modes)
      (modify-face 'font-lock-fixme-face "Red" nil nil t nil t nil nil)
      (modify-face 'font-lock-note-face "Dark Red" nil nil t nil t nil nil)
 
@@ -15556,30 +15558,15 @@
     (add-to-list 'default-frame-alist '(font . "Monospace-13.5"))
     (set-face-attribute 'default t :font "Monospace-13.5")
 
-    (set-face-attribute 'font-lock-builtin-face nil :foreground "#e74c3c")        ; --- changed, tomato
-    (set-face-attribute 'font-lock-comment-face nil :foreground "#gray50")        ; --- changed, grey
-    (set-face-attribute 'font-lock-constant-face nil :foreground "#535bd4")       ; --- changed, violet
-    (set-face-attribute 'font-lock-doc-face nil :foreground "gray50")
-    (set-face-attribute 'font-lock-function-name-face nil :foreground "#3498db")  ; --- changed, blue
-    (set-face-attribute 'font-lock-keyword-face nil :foreground "#0ce067")        ; --- changed, green
-    (set-face-attribute 'font-lock-string-face nil :foreground "#fef51c")         ; --- changed, yellow
-    (set-face-attribute 'font-lock-type-face nil :foreground "#3498db")           ; --- changed, blue
-    (set-face-attribute 'font-lock-variable-name-face nil :foreground "#ffffff")  ; --- changed, white
-
-    (set-face-attribute 'cargo-process--error-face nil :foreground "#e74c3c")     ; --- changed, red
-
-    ; cargo
-    ;("^error\\:?" . ')
-    ;("^warning\\:?" . 'cargo-process--warning-face)
-    ;("^\s*\\^\\~*\s*$" . 'cargo-process--pointer-face)
-    ;("^\s*Compiling.*" . 'cargo-process--standard-face)
-    ;("^\s*Running.*" . 'cargo-process--standard-face)
-    ;("^\s*Updating.*" . 'cargo-process--standard-face)
-    ;("test result: FAILED." . 'cargo-process--error-face)
-    ;("test result: ok." . 'cargo-process--ok-face)
-    ;("test\s.*\sFAILED" . 'cargo-process--error-face)
-    ;("test\s.*\sok" . 'cargo-process--ok-face))
-    ;(set-face-attribute 'cargo-process-font-lock-keywords nil :foreground "#efefef")  ; --- changed, white
+    (set-face-attribute 'font-lock-builtin-face nil :foreground "#e74c3c")        ; tomato
+    (set-face-attribute 'font-lock-comment-face nil :foreground "gray50")         ; grey
+    (set-face-attribute 'font-lock-constant-face nil :foreground "#535bd4")       ; violet
+    (set-face-attribute 'font-lock-doc-face nil :foreground "gray50")             ; grey
+    (set-face-attribute 'font-lock-function-name-face nil :foreground "#3498db")  ; blue
+    (set-face-attribute 'font-lock-keyword-face nil :foreground "#0ce067")        ; green
+    (set-face-attribute 'font-lock-string-face nil :foreground "#fef51c")         ; yellow
+    (set-face-attribute 'font-lock-type-face nil :foreground "#3498db")           ; blue
+    (set-face-attribute 'font-lock-variable-name-face nil :foreground "#ffffff")  ; white
 
 ; --------------------------------- FORMATTING SETTINGS ------------------------------------ ;
 
