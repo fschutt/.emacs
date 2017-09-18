@@ -15125,11 +15125,8 @@
     (autoload 'rust-mode "rust-mode" nil t)
 
     ; Display project directory
-    (setq initial-buffer-choice "/home/felix/Development/mapedit/")
-    (find-file "/home/felix/Development/mapedit/src/*")
-
-    ; Display line numbers
-    (global-linum-mode t)
+    (setq current-project-home "~/Development/mapedit/")
+    (setq initial-buffer-choice current-project-home)
 
     ; Maximize window
     (toggle-frame-maximized)
