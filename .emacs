@@ -15119,12 +15119,20 @@
     (provide 'cargo)
     ;;; cargo.el ends here
 
-; ----------------------------------- GLOBAL SETTINGS -------------------------------------- ;
+; --------------------------------- GLOBAL USER SETTINGS ----------------------------------- ;
 
     ; Load .rust-mode file for Rust-specific settings
     (autoload 'rust-mode "rust-mode" nil t)
 
+    ; Display project directory
+    (setq initial-buffer-choice "/home/felix/Development/mapedit/")
+    (find-file "/home/felix/Development/mapedit/src/*")
+
+    ; Maximize window
     (toggle-frame-maximized)
+
+    ; Auto-save last session
+    ;(desktop-save-mode 1)
 
     ; Stop Emacs from losing undo information by
     ; setting very high limits for undo buffers
@@ -15182,7 +15190,7 @@
              ("\\.mm$"      . objc-mode)
              ) auto-mode-alist))
 
-; --------------------------------- OS-DEPENDENT SETTINGS ------------------------------------ ;
+; --------------------------------- OS-DEPENDENT SETTINGS ----------------------------------- ;
 
     ; Settings for Windows
     (when felix-win32
@@ -15343,52 +15351,66 @@
       (other-window 1)
     )
 
+    ; Opens a file, but from the default-directory
+    (defun find-file-with-custom-start-directory()
+        (interactive)
+        (cd default-directory)
+        (call-interactively 'find-file)
+    )
+
+    ; Opens a file, but from the default-directory in the other window
+    (defun find-file-other-window-with-custom-start-directory()
+        (interactive)
+        (cd default-directory)
+        (call-interactively 'find-file-other-window)
+    )
+
 ; ---------------------------------- SHORTCUT SETTINGS -------------------------------------- ;
 
-    ; ALT + F             Load file in the buffer 1
-    (global-set-key (read-kbd-macro "\ef")  'find-file)
-    ; ALT + SHIFT + F     Load file in the buffer 2
-    (define-key global-map "\eF" 'find-file-other-window)
-    ; ALT + B             Switch to buffer 1
-    (define-key global-map "\eb"  'ido-switch-buffer)
-    ; ALT + SHIFT + B     Switch to buffer 2
-    (define-key global-map"\eB"  'ido-switch-buffer-other-window)
+    ; CTRL + O            Open file in current active buffer
+    (global-set-key (kbd "C-O") 'find-file)
+    ; CTRL + SHIFT + O    Open file in other buffer
+    (global-set-key (kbd "C-S-O") 'find-file-other-window)
+    ; CTRL + U            Select buffer
+    (global-set-key (kbd "C-U") 'ido-switch-buffer)
+    ; CTRL + SHIFT + U    Switch between windows
+    (global-set-key (kbd "C-S-U") 'ido-switch-buffer-other-window)
     ; CTRL + M            Newline and indent
-    (define-key global-map "\C-m" 'newline-and-indent)
-    ; ALT + S             Save buffer
-    (define-key global-map "\es" 'untabify-and-save-buffer)
+    (global-set-key (kbd "C-M") 'newline-and-indent)
+    ; CTRL + S             Save buffer
+    (global-set-key (kbd "C-S") 'untabify-and-save-buffer)
     ; TAB                 Autocomplete
-    (define-key global-map "\t" 'dabbrev-expand)
-    ; ALT + J             Search + replace
-    (define-key global-map "\ej" 'imenu)
+    ;(define-key global-map "\t" 'dabbrev-expand)
+    ; CTRL + J            Search + replace
+    (global-set-key (kbd "C-J") 'imenu)
     ; CTRL + SPACE        Set mark
-    (define-key global-map "\e " 'set-mark-command)
+    (global-set-key (read-kbd-macro "\C- ") 'set-mark-command)
     ; CTRL + Q            Copy block
-    (define-key global-map "\eq" 'append-as-kill)
-    ;CTRL + z             Kill region
-    (define-key global-map "\ez" 'kill-region)
+    (global-set-key (kbd "C-Q") 'append-as-kill)
+    ; ALT + Z             Kill region
+    (global-set-key (kbd "M-Z") 'kill-region)
     ; ALT + BACKSPACE     Kill last word
     (define-key global-map "\377" 'backward-kill-word)
     ; ALT + DELETE        Kill next word
     (define-key global-map [M-delete] 'kill-word)
-    ; CTRL + R              Revert buffer
+    ; ALT + R              Revert buffer
     (define-key global-map "\er" 'revert-buffer)
     ; CTRL + K              Kill buffer
     (define-key global-map "\ek" 'kill-this-buffer)
     ; CTRL + S              Save buffer
-    (define-key global-map "\es" 'save-buffer)
+    (global-set-key (kbd "C-S") 'save-buffer)
     ; CTRL + P              Maximize current buffer
     (define-key global-map "\ep" 'maximize-frame)
     ; CTRL + P              Maximize other buffer
     (define-key global-map "\ew" 'other-window)
-    ; CTRL + P              Jump view back to last mark
+    ; ALT + :              Jump view back to last mark
     (define-key global-map "\e:" 'View-back-to-mark)
     ; CTRL + P              Exchange point and mark
     (define-key global-map "\e;" 'exchange-point-and-mark)
     ; CTRL + G            Go to line
-    (define-key global-map "\eg" 'goto-line)
-    ; CTRL + U            Undo
-    (define-key global-map "\eu" 'undo)
+    (global-set-key (kbd "C-G") 'goto-line)
+    ; CTRL + Z            Undo
+    (global-set-key (kbd "C-Z") 'undo)
     ; CTRL + 6           Uppercase words first letter
     (define-key global-map "\e6" 'upcase-word)
     ; CTRL + ^           Capitalize word
@@ -15398,23 +15420,19 @@
     ; CTRL + .           Replace in region (from last seen mark)
     (define-key global-map "\el" 'felix-replace-in-region)
     ; CTRL + o           Interactive replace
-    (define-key global-map "\eo" 'query-replace)
+    ;(define-key global-map "\eo" 'query-replace)
     ; CTRL + SHIFT + o   Interactive replace
-    (define-key global-map "\eO" 'felix-replace-string)
+    ;(define-key global-map "\eO" 'felix-replace-string)
     ; CTRL + [           Start keyboard macro
     (define-key global-map "\e[" 'start-kbd-macro)
     ; CTRL + ]           End keyboard macro
     (define-key global-map "\e]" 'end-kbd-macro)
     ; CTRL + ]           Call last keyboard macro
     (define-key global-map "\e'" 'call-last-kbd-macro)
-    ; CTRL + ARROW KEYS
-    (define-key global-map [C-right] 'forward-word)
-    (define-key global-map [C-left] 'backward-word)
-    (define-key global-map [C-up] 'previous-blank-line)
-    (define-key global-map [C-down] 'next-blank-line)
-    ; CTRL
-    (define-key global-map [C-next] 'scroll-other-window)
-    (define-key global-map [C-prior] 'scroll-other-window-down)
+    ; CTRL + SHIFT + P   Previous blank line
+    (global-set-key (kbd "C-S-P") 'previous-blank-line)
+    ; CTRL + SHIFT + N   Next blank line
+    (global-set-key (kbd "C-S-N") 'next-blank-line)
     ; CTRL + TAB
     (define-key global-map [C-tab] 'indent-region)
     ; SHIFT + TAB                 Autocomplete
@@ -15428,13 +15446,13 @@
     (define-key global-map [f8] 'felix-replace-string)
     ; F9                  Go to first error
     (define-key global-map [f9] 'first-error)
-    ; F9                  Go to previous error
+    ; F10                  Go to previous error
     (define-key global-map [f10] 'previous-error)
-    ; F9                  Go to next error
+    ; F11                  Go to next error
     (define-key global-map [f11] 'next-error)
     ; CTRL + M            Recompile
-    (global-set-key (kbd "C-c m") 'recompile)
-    (define-key global-map "\em" 'cargo-run-without-asking)
+    ;(global-set-key (kbd "C-c m") 'recompile)
+    ;(define-key global-map "\em" 'cargo-run-without-asking)
 
     ; --- Rust-specific keyboard shortcuts
     ; CTRL +
@@ -15461,6 +15479,17 @@
     (define-key global-map (kbd "C-c C-k") 'cargo-process-check)
     (define-key global-map (kbd "C-c C-S-k") 'cargo-process-clippy)
 
+    ; CTRL + SHIFT + B   Cargo run (most common command)
+    (global-set-key (kbd "C-S-B") 'cargo-process-build)
+
+    ; DEBUGGING
+    ;(global-set-key [f5] 'gud-cont)
+    ;(global-set-key [f7] 'gud-tbreak)
+    ;(global-set-key [S-f11] 'gud-finish)
+    ;(global-set-key [f9] 'gud-break)
+    ;(global-set-key [f10] 'gud-next)
+    ;(global-set-key [f11] 'gud-step)
+
     ;(define-key global-map [backtab] 'indent-for-tab-command)
     ;(define-key global-map "\C-y" 'indent-for-tab-command)
     ;(define-key global-map "   " 'indent-region)
@@ -15470,13 +15499,15 @@
     ; Highlight current line
     (global-hl-line-mode 1)
     ; Current line background color dark blue
-    (set-face-background 'hl-line "#3C3741")
+    (set-face-background 'hl-line "#333333")
+    ; Set cursor to line
+    (setq-default cursor-type 'bar)
+    (set-cursor-color "#ffffff")
+
     ; Foreground color white
     (set-foreground-color "#ecf0f1")
     ; Background color midnight blue
-    (set-background-color "#161616")
-    ; Cursor color orange
-    (set-cursor-color "#f39c12")
+    (set-background-color "#1a1a1a")
     ; Turn off the menu bar
     (menu-bar-mode -1)
     ; Turn off the toolbar
@@ -15498,15 +15529,16 @@
      (modify-face 'font-lock-note-face "Dark Red" nil nil t nil t nil nil)
 
     ; Other colors
-    (add-to-list 'default-frame-alist '(font . "Liberation Mono-11.5"))
-    (set-face-attribute 'default t :font "Liberation Mono-11.5")
+    (add-to-list 'default-frame-alist '(font . "Monospace-13.5"))
+    (set-face-attribute 'default t :font "Monospace-13.5")
+
     (set-face-attribute 'font-lock-builtin-face nil :foreground "#DAB98F")
-    (set-face-attribute 'font-lock-comment-face nil :foreground "gray50")
+    (set-face-attribute 'font-lock-comment-face nil :foreground "#535351")        ; --- changed, grey
     (set-face-attribute 'font-lock-constant-face nil :foreground "olive drab")
     (set-face-attribute 'font-lock-doc-face nil :foreground "gray50")
-    (set-face-attribute 'font-lock-function-name-face nil :foreground "burlywood3")
+    (set-face-attribute 'font-lock-function-name-face nil :foreground "#3498db")  ; --- changed, blue
     (set-face-attribute 'font-lock-keyword-face nil :foreground "DarkGoldenrod3")
-    (set-face-attribute 'font-lock-string-face nil :foreground "olive drab")
+    (set-face-attribute 'font-lock-string-face nil :foreground "#fef51c")         ; --- changed, yellow
     (set-face-attribute 'font-lock-type-face nil :foreground "burlywood3")
     (set-face-attribute 'font-lock-variable-name-face nil :foreground "burlywood3")
 
