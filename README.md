@@ -1,7 +1,22 @@
 # .emacs
-My personal .emacs file for Rust development. It contains the Mozillas rust-mode .emacs file because I am too lazy setting things up every time and I only want to copy one file. Originally taken from Casey Muratorys .emacs file, cleaned up plus functions. Should work "out of the box" (it currently doesn't work). 
+My personal .emacs file for Rust development. It contains:
 
-It opens two buffers, left and right.
+- rust-mode.el (Syntax parsing for rust files)
+- dash.el (List library for Emacs)
+- flycheck.el (On-the-fly syntax checking)
+- flycheck-rust.el (Syntax-checking specific to rust)
+- cargo-process.el (Commands for cargo)
+- cargo.el (Settings for cargo)
+
+Additionally it contains other settings, most of which are from Casey Muratorys .emacs file. I am too lazy setting things up every time and I only want to copy one file. Should work "out of the box", without any additional packages.
+
+If if doesn't work for you, there is a high chance that line 15128 is wrong:
+
+```
+(setq current-project-home "~/Development/mapedit/")
+```
+
+You have to adjust this to your own project directory. I usually leave it at the directory that I am currently working in.
 
 ## Shortcuts
 
@@ -74,3 +89,4 @@ CTRL + SHIFT + B                cargo check
 CTRL + ALT + B                  cargo run
 ```
 
+This file is made up of multiple copy-pasted licenses. I don't care about licensing.
