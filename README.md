@@ -22,21 +22,30 @@ You have to adjust this to your own project directory. I usually leave it at the
 
 ```
 CTRL + O            Open file in current active buffer
-CTRL + A            Select all
 CTRL + SHIFT + O    Open file in other buffer
 CTRL + U            Load buffer in current window
 CTRL + T            Load buffer in other window
 CTRL + D            Switch to other window (override delete in front)
 CTRL + M            Newline and indent
 CTRL + S            Save buffer
-TAB                 Autocomplete
 CTRL + J            Search + replace
 CTRL + SPACE        Set mark
-CTRL + Q            Copy region
-CTRL + F            Cut region
-CTRL + W            Paste region
 
+CTRL + Q            Copy region
+CTRL + X            Cut region
+CTRL + V            Paste region
+CTRL + G            Go to line
+CTRL + Z            Undo
+TAB                 Autocomplete
+
+CTRL + A            Go to beginning of line
+CTRL + SHIFT + A    Go to beginning of buffer
+CTRL + E            Go to end of line
+CTRL + SHIFT + E    Go to end of buffer
+
+CTRL + P            Previous line
 CTRL + SHIFT + P    Previous blank line
+CTRL + N            Next line
 CTRL + SHIFT + N    Next blank line
 CTRL + TAB          Indent region
     
@@ -49,19 +58,19 @@ ALT + P             Maximize current buffer
 ALT + W             Maximize other buffer
 ALT + :             Jump view back to last mark
 ALT + ;             Exchange point and mark
-CTRL + G            Go to line
-CTRL + Z            Undo
 ALT + 6             Uppercase words first letter
 ALT + ^             Capitalize word
 ALT + .             Fill paragraph
 ALT + .             Replace in region (from last seen mark)
 ALT + [             Start keyboard macro
 ALT + ]             End keyboard macro
+
 SHIFT + TAB         Actually tab
 HOME                Go to begin of line
 END                 Go to end of line
 PGUP                Forward page
-PGDOWM              Backward page
+PGDOWN              Backward page
+
 F8                  Replace
 F9                  Go to first error
 F10                 Go to previous error

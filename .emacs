@@ -15426,8 +15426,6 @@
 
     ; CTRL + O            Open file in current active buffer
     (global-set-key (kbd "C-o") 'find-file)
-    ; CTRL + A            Select all
-    (global-set-key (kbd "C-a") 'mark-whole-buffer)
     ; CTRL + SHIFT + O    Open file in other buffer
     (global-set-key (kbd "C-S-o") 'find-file-other-window)
     ; CTRL + U            Load buffer in current window
@@ -15457,11 +15455,13 @@
     ; CTRL + X            Cut region
     (global-set-key (kbd "C-x") 'cut)
     ; CTRL + V            Paste region
-    (global-set-key (kbd "C-v") 'paste )
+    (global-set-key (kbd "C-v") 'paste)
     ; CTRL + E            Go to end of line
     (global-set-key (kbd "C-e") 'end-of-line)
     ; CTRL + SHIFT + E    Go to end of buffer
     (global-set-key (kbd "C-S-e") 'end-of-buffer)
+    ; CTRL + A            Go to beginning of line
+    (global-set-key (kbd "C-a") beginning-of-line)
     ; CTRL + SHIFT + A    Go to beginning of buffer
     (global-set-key (kbd "C-S-a") 'beginning-of-buffer)
 
