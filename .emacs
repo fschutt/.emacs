@@ -15236,6 +15236,8 @@
     (setq scroll-step 3)
     ; Display clock
     (display-time)
+    ; Smooth scroll
+    (setq scroll-step 3)
 
     ; Autocomplection settings
     (setq dabbrev-case-replace t)
@@ -15452,10 +15454,17 @@
     (define-key global-map [C-tab] 'indent-region)
     ; CTRL + Q            Copy region
     (global-set-key (kbd "C-q") 'copy)
-    ; CTRL + F            Cut region
-    (global-set-key (kbd "C-f") 'cut)
-    ; CTRL + W            Paste region
-    (global-set-key (kbd "C-w") 'paste)
+    ; CTRL + X            Cut region
+    (global-set-key (kbd "C-x") 'cut)
+    ; CTRL + V            Paste region
+    (global-set-key (kbd "C-v") 'paste )
+    ; CTRL + E            Go to end of line
+    (global-set-key (kbd "C-e") 'end-of-line)
+    ; CTRL + SHIFT + E    Go to end of buffer
+    (global-set-key (kbd "C-S-e") 'end-of-buffer)
+    ; CTRL + SHIFT + A    Go to beginning of buffer
+    (global-set-key (kbd "C-S-a") 'beginning-of-buffer)
+
 
     ; ALT + Z             Kill region
     (global-set-key (kbd "M-Z") 'kill-region)
