@@ -15461,7 +15461,7 @@
     ; CTRL + SHIFT + E    Go to end of buffer
     (global-set-key (kbd "C-S-e") 'end-of-buffer)
     ; CTRL + A            Go to beginning of line
-    (global-set-key (kbd "C-a") beginning-of-line)
+    (global-set-key (kbd "C-a") 'beginning-of-line)
     ; CTRL + SHIFT + A    Go to beginning of buffer
     (global-set-key (kbd "C-S-a") 'beginning-of-buffer)
 
