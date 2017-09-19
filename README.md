@@ -32,8 +32,10 @@ CTRL + S            Save buffer
 TAB                 Autocomplete
 CTRL + J            Search + replace
 CTRL + SPACE        Set mark
-CTRL + Q            Copy block
-CTRL + S            Save buffer
+CTRL + Q            Copy region
+CTRL + F            Cut region
+CTRL + W            Paste region
+
 CTRL + SHIFT + P    Previous blank line
 CTRL + SHIFT + N    Next blank line
 CTRL + TAB          Indent region

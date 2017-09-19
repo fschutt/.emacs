@@ -15125,7 +15125,7 @@
     (autoload 'rust-mode "rust-mode" nil t)
 
     ; Display project directory
-    (setq current-project-home "~/Development/mapedit/")
+    (setq current-project-home "~/Development/srtmtoimage/")
     (setq initial-buffer-choice current-project-home)
 
     ; Maximize window
@@ -15367,40 +15367,95 @@
 
     (setq ido-default-buffer-method 'selected-window)
 
+    (setq x-select-enable-clipboard t)
+    (setq x-select-enable-primary t)
+
+    ; Copy function
+    (defun copy (beg end)
+        "Copy region into clipboard"
+        (interactive "r")
+        (if mark-active
+            (progn
+                (x-set-selection 'CLIPBOARD (buffer-substring beg end))
+                (setq mark-active nil)
+                (message "Marked text copied")
+                )
+            (progn
+                (x-set-selection 'CLIPBOARD (buffer-substring line-beginning-position line-end-position))
+                (setq mark-active nil)
+                (message "Current line is copied")
+                )
+            )
+        )
+
+    ; Cut function
+    (defun cut (beg end)
+        "Copy region into clipboard and kill"
+        (interactive "r")
+        (if mark-active
+            (progn
+                (x-set-selection 'CLIPBOARD (buffer-substring beg end))
+                (delete-region beg end)
+                (setq mark-active nil)
+                (message "Marked text cut"))
+            (progn
+                (x-set-selection 'CLIPBOARD (buffer-substring line-beginning-position line-end-position))
+                (delete-region line-beginning-position line-end-position)
+                (setq mark-active nil)
+                (message "Current line is cut")
+            )
+        )
+    )
+
+    ; Paste function
+    (defun paste (beg end)
+        "Paste contents of clipboard into point"
+        (interactive "r")
+        (if mark-active
+            (delete-region beg end))
+        (insert (x-selection 'CLIPBOARD))
+    )
+
+    (setq interprogram-paste-function 'paste)
+    (setq interprogram-copy-function 'copy)
+    (setq interprogram-cut-function 'cut)
+
 ; ---------------------------------- SHORTCUT SETTINGS -------------------------------------- ;
 
     ; CTRL + O            Open file in current active buffer
-    (global-set-key (kbd "C-O") 'find-file)
+    (global-set-key (kbd "C-o") 'find-file)
     ; CTRL + A            Select all
-    (global-set-key (kbd "C-A") 'mark-whole-buffer)
+    (global-set-key (kbd "C-a") 'mark-whole-buffer)
     ; CTRL + SHIFT + O    Open file in other buffer
-    (global-set-key (kbd "C-S-O") 'find-file-other-window)
+    (global-set-key (kbd "C-S-o") 'find-file-other-window)
     ; CTRL + U            Load buffer in current window
-    (global-set-key (kbd "C-U") 'ido-switch-buffer)
+    (global-set-key (kbd "C-u") 'ido-switch-buffer)
     ; CTRL + T            Load buffer in other window
-    (global-set-key (kbd "C-T") 'ido-switch-buffer-other-window)
+    (global-set-key (kbd "C-t") 'ido-switch-buffer-other-window)
     ; CTRL + D            Switch to other window (override delete in front)
-    (global-set-key (kbd "C-D") 'other-window)
+    (global-set-key (kbd "C-d") 'other-window)
     ; CTRL + M            Newline and indent
-    (global-set-key (kbd "C-M") 'newline-and-indent)
+    (global-set-key (kbd "C-m") 'newline-and-indent)
     ; CTRL + S             Save buffer
-    (global-set-key (kbd "C-S") 'untabify-and-save-buffer)
+    (global-set-key (kbd "C-s") 'untabify-and-save-buffer)
     ; TAB                 Autocomplete
     (global-set-key (kbd "TAB") 'dabbrev-expand)
     ; CTRL + J            Search + replace
-    (global-set-key (kbd "C-J") 'imenu)
+    (global-set-key (kbd "C-j") 'imenu)
     ; CTRL + SPACE        Set mark
     (global-set-key (read-kbd-macro "\C- ") 'set-mark-command)
-    ; CTRL + Q            Copy block
-    (global-set-key (kbd "C-Q") 'append-as-kill)
-    ; CTRL + S            Save buffer
-    (global-set-key (kbd "C-S") 'save-buffer)
     ; CTRL + SHIFT + P    Previous blank line
-    (global-set-key (kbd "C-S-P") 'previous-blank-line)
+    (global-set-key (kbd "C-S-p") 'previous-blank-line)
     ; CTRL + SHIFT + N    Next blank line
-    (global-set-key (kbd "C-S-N") 'next-blank-line)
+    (global-set-key (kbd "C-S-n") 'next-blank-line)
     ; CTRL + TAB          Indent region
     (define-key global-map [C-tab] 'indent-region)
+    ; CTRL + Q            Copy region
+    (global-set-key (kbd "C-q") 'copy)
+    ; CTRL + F            Cut region
+    (global-set-key (kbd "C-f") 'cut)
+    ; CTRL + W            Paste region
+    (global-set-key (kbd "C-w") 'paste)
 
     ; ALT + Z             Kill region
     (global-set-key (kbd "M-Z") 'kill-region)
