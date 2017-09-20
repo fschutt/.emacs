@@ -15439,7 +15439,7 @@
     ; CTRL + S             Save buffer
     (global-set-key (kbd "C-s") 'untabify-and-save-buffer)
     ; TAB                 Autocomplete
-    (global-set-key (kbd "TAB") 'dabbrev-expand)
+    ;(global-set-key (kbd "TAB") 'dabbrev-expand)
     ; CTRL + J            Search + replace
     (global-set-key (kbd "C-j") 'imenu)
     ; CTRL + SPACE        Set mark
