@@ -29,6 +29,8 @@ CTRL + D            Switch to other window (override delete in front)
 CTRL + M            Newline and indent
 CTRL + S            Save buffer
 CTRL + J            Search + replace
+CTRL + L            Select current line
+CTRL + SHIFT + L    Duplicate current line
 CTRL + SPACE        Set mark
 
 CTRL + Q            Copy region

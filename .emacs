@@ -15303,6 +15303,31 @@
       (copy-region-as-kill (mark) (point))
     )
 
+    ; Duplicate current line function
+    (defun duplicate-current-line (&optional n)
+      "duplicate current line, make more than 1 copy given a numeric argument"
+      (interactive "p")
+      (save-excursion
+        (let ((nb (or n 1))
+        (current-line (thing-at-point 'line)))
+          ;; when on last line, insert a newline first
+          (when (or (= 1 (forward-line 1)) (eq (point) (point-max)))
+      (insert "\n"))
+    
+          ;; now insert as many time as requested
+          (while (> n 0)
+      (insert current-line)
+      (decf n))))
+    )
+    
+    ; Select current line
+    (transient-mark-mode 1)
+
+    (defun select-current-line ()
+      "Select the current line"
+      (interactive)
+      (end-of-line) ; move to end of line
+      (set-mark (line-beginning-position)))
 ; ------------------------------------ BUILD SETTINGS --------------------------------------- ;
 
     ; Set build command command
@@ -15486,6 +15511,10 @@
     (global-set-key (kbd "M-;") 'exchange-point-and-mark)
     ; CTRL + G            Go to line
     (global-set-key (kbd "C-G") 'goto-line)
+    ; CTRL + L            Select current line
+    (global-set-key (kbd "C-L") 'select-current-line)
+    ; CTRL + SHIFT + L    Duplicate current line
+    (global-set-key (kbd "C-S-L") 'duplicate-current-line)
     ; CTRL + Z            Undo
     (global-set-key (kbd "C-Z") 'undo)
     ; ALT + 6             Uppercase words first letter
@@ -15496,9 +15525,9 @@
     (global-set-key (kbd "M-.") 'fill-paragraph)
     ; ALT + .             Replace in region (from last seen mark)
     (global-set-key (kbd "M-L") 'felix-replace-in-region)
-    ; CTRL + o            Interactive replace
+    ; CTRL + O            Interactive replace
     ;(define-key global-map "\eo" 'query-replace)
-    ; CTRL + SHIFT + o    Interactive replace
+    ; CTRL + SHIFT + O    Interactive replace
     ;(define-key global-map "\eO" 'felix-replace-string)
     ; ALT + [             Start keyboard macro
     (global-set-key (kbd "M-[") 'start-kbd-macro)
