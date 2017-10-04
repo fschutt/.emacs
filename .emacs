@@ -15162,6 +15162,7 @@
     (setq mouse-wheel-progressive-speed nil)
     (setq mouse-wheel-scroll-amount (quote (15)))
     (setq version-control nil)
+    (setq create-lockfiles nil)
 
     ; Never split a window
     (setq split-window-preferred-function ())
