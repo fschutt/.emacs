@@ -15125,7 +15125,7 @@
     (autoload 'rust-mode "rust-mode" nil t)
 
     ; Display project directory
-    (setq current-project-home "~/Development/srtmtoimage/")
+    (setq current-project-home "~/Development/mapedit/")
     (setq initial-buffer-choice current-project-home)
 
     ; Maximize window
@@ -15331,6 +15331,8 @@
       (set-mark (line-beginning-position)))
 ; ------------------------------------ BUILD SETTINGS --------------------------------------- ;
 
+    ; Set enviroment so that emacs loads the .bashrc file
+    (setq shell-command-switch "-ic")
     ; Set build command command
     ; TODO: If it is a library, use cargo build, if its a binary, use cargo run
     (setq compile-command "cargo build")
