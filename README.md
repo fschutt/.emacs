@@ -18,6 +18,12 @@ If if doesn't work for you, there is a high chance that line 15128 is wrong:
 
 You have to adjust this to your own project directory. I usually leave it at the directory that I am currently working in.
 
+## Installation
+
+```
+curl https://raw.githubusercontent.com/fschutt/.emacs/master/.emacs > ~/.emacs
+```
+
 ## Shortcuts
 
 ```
